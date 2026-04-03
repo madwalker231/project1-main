@@ -38,7 +38,7 @@ public class ComplianceObligationController {
     private BusinessEntityRepository entityRepo;
 
     @Autowired
-    private RegulatoryEntityRepository reqRepo;
+    private RegulatoryEntityRepository reqRepo; // Re-funnel through Service layer
 
     @GetMapping
     public List<ComplianceObligation> getAll() {
