@@ -3,7 +3,7 @@ package com.skillstormpg1.project1.models;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -59,5 +59,6 @@ public class RegulatoryEntity {
     private String status; // Example: Active, Suspended, etc.
 
     @OneToMany(mappedBy = "requirements", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<ComplianceObligation> obligations;
 }

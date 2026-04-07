@@ -2,7 +2,8 @@ package com.skillstormpg1.project1.models;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -57,6 +58,6 @@ public class BusinessEntity {
     // Allows removal of BusinessEntity to cascade delete associated obligations
     // Foreign key error - DataIntegrityViolationException fix
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIncludeProperties("entity") // Prevents infinite recursion
+    @JsonManagedReference // Prevents infinite recursion
     private List<ComplianceObligation> obligations;
 }

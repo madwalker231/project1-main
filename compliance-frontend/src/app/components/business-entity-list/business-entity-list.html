@@ -1,0 +1,34 @@
+<div class="container mt-4">
+    <h2>Business Entities</h2>
+    <p>Debug: number of entities found = {{ entities.length }}</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Jurisdiction</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (entity of entities; track entity.id) {
+                <tr>
+                    <td>{{ entity.id}}</td>
+                    <td>{{ entity.name}}</td>
+                    <td>{{ entity.entityType}}</td>
+                    <td>{{ entity.jurisdiction}}</td>
+                    <td>
+                        <span [class]="entity.status === 'Active' ? 'text-success' : 'text-warning'">
+                            {{ entity.status }}
+                        </span>
+                    </td>
+                </tr>
+            } @empty {
+                <tr>
+                    <td colspan="5" class="text-center"> No entities found in database.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

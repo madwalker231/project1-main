@@ -2,6 +2,8 @@ package com.skillstormpg1.project1.models;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,10 +33,12 @@ public class ComplianceObligation {
 
     @ManyToOne
     @JoinColumn(name = "entity_id", nullable = false)
+    @JsonBackReference
     private BusinessEntity entity;
 
     @ManyToOne
     @JoinColumn(name = "requirement_id", nullable = false)
+    @JsonBackReference
     private RegulatoryEntity requirements;
 
     @Column(name = "obligation_status", nullable = false)
@@ -45,4 +49,5 @@ public class ComplianceObligation {
 
     @Column(columnDefinition = "TEXT")
     private String notes;
+
 }
