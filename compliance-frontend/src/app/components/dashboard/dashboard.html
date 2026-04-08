@@ -1,0 +1,85 @@
+<div class="container mt-4">
+  <h1>Compliance Command Center</h1>
+  <hr>
+
+  @if (stats) {
+  <div class="row text-center mb-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-primary">
+        <div class="card-body">
+          <h5 class="card-title text-muted">Total Entities</h5>
+          <p class="display-4">{{ stats.totalEntities }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-info">
+        <div class="card-body">
+          <h5 class="card-title text-muted">Active Requirements</h5>
+          <p class="display-4">{{ stats.totalRequirements }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm"
+        [ngClass]="stats.nonCompliantCount > 0 ? 'border-danger text-danger' : 'border-success text-success'">
+        <div class="card-body">
+          <h5 class="card-title">Non-Compliant Alerts</h5>
+          <p class="display-4">{{ stats.nonCompliantCount }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>Global Compliance Score: {{ stats.overallComplianceScore | number:'1.0-1' }}%</h5>
+          <div class="progress" style="height: 25px;">
+            <div class="progress-bar bg-success" role="progressbar" [style.width.%]="stats.overallComplianceScore">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-warning">
+        <div class="card-header bg-warning text-dark">Upcoming Deadlines (60 Days)</div>
+        <ul class="list-group list-group-flush">
+          @for (req of stats?.upcomingRequirements; track $index) {
+          <li class="list-group-item">
+            <strong>{{ req?.name }}</strong> - {{ req?.effectiveDate | date }}
+          </li>
+          } @empty {
+          <li class="list-group-item text-muted">No immediate deadlines.</li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm border-danger">
+        <div class="card-header bg-danger text-white">Critical Non-Compliance</div>
+        <ul class="list-group list-group-flush">
+          @for (alert of stats?.criticalObligations; track $index) {
+          <li class="list-group-item">
+            <strong>{{ alert.entityName }}</strong> - {{ alert.requirementName }}
+          </li>
+          } @empty {
+          <li class="list-group-item text-muted">All systems compliant.</li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+  } @else {
+  <div class="text-center mt-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p>Loading Dashboard Analytics...</p>
+  </div>
+  }
+</div>

@@ -58,7 +58,7 @@ public class RegulatoryEntity {
     @Pattern(regexp = "^(Active|Pending|Superseded)$")
     private String status; // Example: Active, Suspended, etc.
 
-    @OneToMany(mappedBy = "requirements", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<ComplianceObligation> obligations;
 }

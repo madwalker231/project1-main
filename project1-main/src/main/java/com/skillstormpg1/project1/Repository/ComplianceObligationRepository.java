@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ComplianceObligationRepository extends JpaRepository<ComplianceObligation, Long> {
     // Queries the database for business entities and regulations entities to connect regulations to business
-    Optional<ComplianceObligation> findByEntityAndRequirements(BusinessEntity entity, RegulatoryEntity requirement);
+    Optional<ComplianceObligation> findByEntityAndRequirement(BusinessEntity entity, RegulatoryEntity requirement);
 
     // Counts non compliant and compliant entities for dashboards
     long countByStatus(String status);

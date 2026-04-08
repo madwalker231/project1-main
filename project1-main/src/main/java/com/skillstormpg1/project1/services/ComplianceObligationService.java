@@ -14,7 +14,7 @@ public class ComplianceObligationService {
     private ComplianceObligationRepository obligationRepo;
     
     public ComplianceObligation savedComplianceObligation(ComplianceObligation obligation) {
-        Optional<ComplianceObligation> existing = obligationRepo.findByEntityAndRequirements(obligation.getEntity(), obligation.getRequirements());
+        Optional<ComplianceObligation> existing = obligationRepo.findByEntityAndRequirement(obligation.getEntity(), obligation.getRequirement());
 
         if (existing.isPresent()) {
             ComplianceObligation found = existing.get();

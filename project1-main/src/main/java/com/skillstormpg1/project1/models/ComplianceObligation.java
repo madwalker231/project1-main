@@ -39,7 +39,7 @@ public class ComplianceObligation {
     @ManyToOne
     @JoinColumn(name = "requirement_id", nullable = false)
     @JsonBackReference
-    private RegulatoryEntity requirements;
+    private RegulatoryEntity requirement;
 
     @Column(name = "obligation_status", nullable = false)
     private String status; // Example: Compliant, Non-Compliant, In Progress

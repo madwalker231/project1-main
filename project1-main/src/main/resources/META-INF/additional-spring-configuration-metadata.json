@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "spring.jpa.sql.inti.mode",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.sql.inti.mode'"
+  },
+  {
+    "name": "spring.jpa.jpa.defer-datasource-initialization",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.jpa.defer-datasource-initialization'"
+  },
+  {
+    "name": "spring.jpa.sql.init.mode",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.jpa.sql.init.mode'"
+  }
+]}

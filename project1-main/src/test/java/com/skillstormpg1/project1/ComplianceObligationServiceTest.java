@@ -38,11 +38,11 @@ public class ComplianceObligationServiceTest {
         req.setId(1L);
         ComplianceObligation obligation = new ComplianceObligation();
         obligation.setEntity(entity);
-        obligation.setRequirements(req);
+        obligation.setRequirement(req);
         obligation.setStatus("In Progress");
 
         // Have Mockito search, return empty, mocking a new record
-        when(obligationRepo.findByEntityAndRequirements(entity, req)).thenReturn(Optional.empty());
+        when(obligationRepo.findByEntityAndRequirement(entity, req)).thenReturn(Optional.empty());
         when(obligationRepo.save(any())).thenReturn(obligation);
 
         ComplianceObligation result = obligationService.savedComplianceObligation(obligation);
@@ -62,10 +62,10 @@ public class ComplianceObligationServiceTest {
 
         ComplianceObligation updateRequest = new ComplianceObligation();
         updateRequest.setEntity(entity);
-        updateRequest.setRequirements(req);
+        updateRequest.setRequirement(req);
         updateRequest.setStatus("Compliant");
 
-        when(obligationRepo.findByEntityAndRequirements(entity, req)).thenReturn(Optional.of(existing));
+        when(obligationRepo.findByEntityAndRequirement(entity, req)).thenReturn(Optional.of(existing));
         when(obligationRepo.save(any())).thenReturn(existing);
 
         ComplianceObligation result = obligationService.savedComplianceObligation(updateRequest);

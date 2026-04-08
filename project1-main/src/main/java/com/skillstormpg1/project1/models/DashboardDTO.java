@@ -20,5 +20,5 @@ public class DashboardDTO {
     private Map<String, Long> entitiesByType; 
     private double overallComplianceScore;
     private List<RegulatoryEntity> upcomingRequirements;
-    private List<ComplianceObligation> criticalObligations;
+    private List<ComplianceAlertDTO>criticalObligations;
 }

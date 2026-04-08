@@ -48,7 +48,7 @@ public class ComplianceObligationController {
     @PostMapping
     public ResponseEntity<?> assignRequirement(@RequestBody ComplianceObligation obligation) {
         BusinessEntity entity = entityRepo.findById(obligation.getEntity().getId()).orElse(null);
-        RegulatoryEntity req = reqRepo.findById(obligation.getRequirements().getId()).orElse(null);
+        RegulatoryEntity req = reqRepo.findById(obligation.getRequirement().getId()).orElse(null);
         // Checks for business and regulatory entities
         if(entity == null || req == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity or Requirement not found.");
@@ -58,7 +58,7 @@ public class ComplianceObligationController {
                 .body("Cannot assign a requirement with 'Superseded' status.");
         }
         // Queries database to check if obligation already exists
-        Optional<ComplianceObligation> existingOpt = obligationRepo.findByEntityAndRequirements(entity, req);
+        Optional<ComplianceObligation> existingOpt = obligationRepo.findByEntityAndRequirement(entity, req);
         // If obligation exists checks obligations status changes and updates the obligation
         if(existingOpt.isPresent()) {
             ComplianceObligation existing = existingOpt.get();
@@ -76,7 +76,7 @@ public class ComplianceObligationController {
         }
         // Saves the obligation as nee obligation.
         obligation.setEntity(entity);
-        obligation.setRequirements(req);
+        obligation.setRequirement(req);
         ComplianceObligation saved = obligationRepo.save(obligation);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
