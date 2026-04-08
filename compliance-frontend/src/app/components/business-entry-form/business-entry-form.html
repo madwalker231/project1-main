@@ -1,0 +1,50 @@
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Register New Business Entity</h3>
+        </div>
+        <div class="car-body">
+            <form [formGroup]="entityForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label class="form-lable">Organization Name</label>
+                    <input type="text" class="form-control" formControlName="name"
+                        [class.is-invalid]="entityForm.get('name')?.invalid && entityForm.get('name')?.touched">
+                    <div class="invalid-feedback">Please enter a valid name (min 3 characters).</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Entity Type</label>
+                        <select class="form-select" formControlName="entityType">
+                            <option value="">Select Type...</option>
+                            <option value="Bank">Bank</option>
+                            <option value="Broker-Dealer">Broker-Dealer</option>
+                            <option value="Investment Firm">Investment Firm</option>
+                            <option value="Insurance Company">Insurance Company</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Jurisdiction</label>
+                        <input type="text" class="form-control" formControlName="jurisdiction"
+                            placeholder="e.g. US, UK, EU">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Initial Status</label>
+                    <select class="form-select" formControlName="status">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-secondary" routerLink="/entities">Cancel</button>
+                    <button type="button" class="btn btn-success" [disabled]="entityForm.invalid">Save Entity</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
