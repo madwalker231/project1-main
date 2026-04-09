@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,7 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
+@com.fasterxml.jackson.databind.annotation.JsonDeserialize(builder = BusinessEntity.BusinessEntityBuilder.class)
 public class BusinessEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +38,7 @@ public class BusinessEntity {
 
     @Column(nullable = false)
     @Size(max = 100)
+    @JsonProperty("name")
     private String name; 
 
     @Column(nullable = false)
@@ -44,15 +46,18 @@ public class BusinessEntity {
     @Pattern(regexp = "^(Bank|Broker-Dealer|Investment Firm|Insurance Company)$",
         message = "Invalid entity type."
     )
+    @JsonProperty("entityType")
     private String entityType; // Example: Bank, Broker-Dealer, etc.
 
     @Column(nullable = false)
     @NotBlank(message = "Jurisdiction is required")
+    @JsonProperty("jurisdiction")
     private String jurisdiction; // Example: US, EU 
 
     @Column(nullable = false)
     @NotBlank(message = "Status is required")
     @Pattern(regexp = "^(Active|Inactive|Pending)$")
+    @JsonProperty("status")
     private String status; // Example: Active, Under Review, etc.
 
     // Allows removal of BusinessEntity to cascade delete associated obligations

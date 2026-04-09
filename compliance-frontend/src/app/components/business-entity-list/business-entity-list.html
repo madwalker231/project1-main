@@ -12,21 +12,29 @@
         </thead>
         <tbody>
             @for (entity of entities; track entity.id) {
-                <tr>
-                    <td>{{ entity.id}}</td>
-                    <td>{{ entity.name}}</td>
-                    <td>{{ entity.entityType}}</td>
-                    <td>{{ entity.jurisdiction}}</td>
-                    <td>
-                        <span [class]="entity.status === 'Active' ? 'text-success' : 'text-warning'">
-                            {{ entity.status }}
-                        </span>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ entity.id}}</td>
+                <td>{{ entity.name}}</td>
+                <td>{{ entity.entityType}}</td>
+                <td>{{ entity.jurisdiction}}</td>
+                <td>
+                    <span [class]="entity.status === 'Active' ? 'text-success' : 'text-warning'">
+                        {{ entity.status }}
+                    </span>
+                </td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/entities/edit', entity.id]">
+                        Edit
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteEntity(entity.id!)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
             } @empty {
-                <tr>
-                    <td colspan="5" class="text-center"> No entities found in database.</td>
-                </tr>
+            <tr>
+                <td colspan="5" class="text-center"> No entities found in database.</td>
+            </tr>
             }
         </tbody>
     </table>

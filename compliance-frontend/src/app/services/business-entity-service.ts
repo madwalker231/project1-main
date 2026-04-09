@@ -17,8 +17,17 @@ export class BusinessEntityService {
   }
 
   //POST new Business Entities
-  createEntity(entity: BusinessEntity): Observable<BusinessEntity> {
+  createEntity(entity: any): Observable<BusinessEntity> {
     return this.http.post<BusinessEntity>(this.apiUrl, entity);
+  }
+
+  //PUT: update existing entities by getting id and updating information
+  getEntityById(id: number): Observable<BusinessEntity> {
+    return this.http.get<BusinessEntity>(`${this.apiUrl}/${id}`);
+  }
+
+  updateEntity(id: number, entity: BusinessEntity): Observable<BusinessEntity> {
+    return this.http.put<BusinessEntity>(`${this.apiUrl}/${id}`, entity);
   }
 
   //DELETE Business Entity
