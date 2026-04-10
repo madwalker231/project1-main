@@ -12,22 +12,22 @@ import { RegulatoryRequirements } from '../../models/Regulatory-req.model';
   templateUrl: './regulatory-form.html',
   styleUrl: './regulatory-form.css',
 })
-export class RegulatoryForm implements OnInit{
+export class RegulatoryForm implements OnInit {
   reqForm!: FormGroup;
   isEditMode = false;
   reqId?: number;
-  
+
   constructor(
     private fb: FormBuilder,
     private reqService: RegulatoryRequirement,
     private route: ActivatedRoute,
     private router: Router
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
     const id = this.route.snapshot.paramMap.get('id');
-    if(id) {
+    if (id) {
       this.isEditMode = true;
       this.reqId = +id;
       this.loadRequirements(+id);
@@ -57,13 +57,20 @@ export class RegulatoryForm implements OnInit{
   }
 
   onSubmit(): void {
-    if(this.reqForm.valid) {
-      const action = this.isEditMode
-        ? this.reqService.updateRegulatory(this.reqId!, this.reqForm.value)
-        : this.reqService.createRegulatory(this.reqForm.value);
-      action.subscribe({
+    const formValue = this.reqForm.value;
+
+    if (this.isEditMode) {
+      this.reqService.updateRegulatory(this.reqId!, formValue).subscribe({
         next: () => this.router.navigate(['/regulations']),
-        error:(err) => console.error('Save Failed', err)
+        error: (err) => console.error('Update Failed', err)
+      });
+    } else {
+      const newRequirement = { ...formValue };
+      delete newRequirement.id;
+
+      this.reqService.createRegulatory(newRequirement).subscribe({
+        next: () => this.router.navigate(['/regulations']),
+        error: (err) => console.error('Registration Failed', err)
       });
     }
   }

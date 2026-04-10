@@ -3,29 +3,20 @@ package com.skillstormpg1.project1.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstormpg1.project1.Repository.RegulatoryEntityRepository;
 import com.skillstormpg1.project1.models.RegulatoryEntity;
-
-import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PutMapping;
-
-
-
-
-
 
 @RestController
 @RequestMapping("/api/v1/requirements")
@@ -42,9 +33,9 @@ public class RegulatoryController {
 
     @GetMapping("/search")
     public List<RegulatoryEntity> searchRegulatoryEntities(
-        @RequestParam (required = false) String name,
-        @RequestParam (required = false) String body,
-        @RequestParam (required = false) String status) {
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String body,
+            @RequestParam(required = false) String status) {
         if (name != null) {
             return repository.findByNameContainingIgnoreCase(name);
         } else if (body != null) {
@@ -54,35 +45,35 @@ public class RegulatoryController {
         }
         return repository.findAll();
     }
-    
 
     // Add Regulatory Entities
-    @PostMapping
-    public ResponseEntity<RegulatoryEntity> createRegulatory(@Valid @RequestBody RegulatoryEntity entity) {
-        RegulatoryEntity savedReg = repository.save(entity);
-        return new ResponseEntity<>(savedReg, HttpStatus.CREATED);
+
+    @PostMapping(consumes = { "application/json", "application/json;charset=UTF-8" })
+    public ResponseEntity<RegulatoryEntity> create(@RequestBody RegulatoryEntity entity) {
+        System.out.println("Received Entity: " + entity.getName()); // Diagnostic log
+        return ResponseEntity.ok(repository.save(entity));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RegulatoryEntity> updateRequirements(@PathVariable Long id, @RequestBody RegulatoryEntity details) {
-        return repository.findById(id).map(requirement -> {
-            requirement.setName(details.getName());
-            requirement.setGoverningBody(details.getGoverningBody());
-            requirement.setRequirementType(details.getRequirementType());
-            requirement.setEffectiveDate(details.getEffectiveDate());
-            requirement.setStatus(details.getStatus());
+    public RegulatoryEntity updateRegulatory(@PathVariable Long id, @RequestBody RegulatoryEntity requirementDetails) {
+        RegulatoryEntity requirement = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Requirement not found"));
 
-            RegulatoryEntity update = repository.save(requirement);
-            return ResponseEntity.ok(update);
-        }).orElse(ResponseEntity.notFound().build());
+        requirement.setName(requirementDetails.getName());
+        requirement.setGoverningBody(requirementDetails.getGoverningBody());
+        requirement.setRequirementType(requirementDetails.getRequirementType());
+        requirement.setEffectiveDate(requirementDetails.getEffectiveDate());
+        requirement.setStatus(requirementDetails.getStatus());
+
+        return repository.save(requirement);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReg(@PathVariable Long id) {
-        if(repository.existsById(id)) {
+        if (repository.existsById(id)) {
             repository.deleteById(id);
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
-    }    
+    }
 }

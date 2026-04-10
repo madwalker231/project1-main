@@ -28,7 +28,7 @@
             <td>{{ req.effectiveDate | date }}</td>
             <td>{{ req.status }}</td>
             <td class="text-center">
-              <a class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/regulations/edit', req.id]">
+              <a class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/requirements/new', req.id]">
                 Edit
               </a>
               <button class="btn btn-sm btn-outline-danger" (click)="deleteReg(req.id!)">

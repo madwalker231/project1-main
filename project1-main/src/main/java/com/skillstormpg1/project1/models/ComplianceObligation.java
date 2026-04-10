@@ -3,6 +3,7 @@ package com.skillstormpg1.project1.models;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,18 +34,19 @@ public class ComplianceObligation {
 
     @ManyToOne
     @JoinColumn(name = "entity_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "entity-obligations")
     private BusinessEntity entity;
 
     @ManyToOne
     @JoinColumn(name = "requirement_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "requirement-obligations")
     private RegulatoryEntity requirement;
 
     @Column(name = "obligation_status", nullable = false)
     private String status; // Example: Compliant, Non-Compliant, In Progress
 
     @Column(name = "last_review_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate lastReviewDate;
 
     @Column(columnDefinition = "TEXT")

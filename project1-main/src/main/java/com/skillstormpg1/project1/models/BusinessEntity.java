@@ -63,6 +63,6 @@ public class BusinessEntity {
     // Allows removal of BusinessEntity to cascade delete associated obligations
     // Foreign key error - DataIntegrityViolationException fix
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference // Prevents infinite recursion
+    @JsonManagedReference(value = "entity-obligations") // Prevents infinite recursion
     private List<ComplianceObligation> obligations;
 }

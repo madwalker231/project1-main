@@ -12,6 +12,7 @@ export const routes: Routes = [
     { path: 'entities/edit/:id', component: BusinessEntryForm},
     { path: 'requirements', component: RegulatoryList},
     { path: 'requirements/edit/:id', component: RegulatoryForm},
+    { path: 'requirements/new', component: RegulatoryForm},
     { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     { path: '**', redirectTo: '/dashboard'}
 ];
